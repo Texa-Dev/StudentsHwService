@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher</title>
+    <th:block th:insert="~{/fragments/settings-head::settings-head}">
+    </th:block>
+
+</head>
+<body>
+<th:block th:insert="~{/fragments/header::header}"></th:block>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="col-lg-12 text-center">
+                <div class="section-title">
+                    <h2>Teacher</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="clientsTable">
+                    <table class="table table-bordered table-dark">
+                        <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Surname</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <!--/*@thymesVar id="teacher" type="Teacher"*/-->
+                        <tr>
+                            <td th:utext="${teacher.id}"></td>
+                            <td th:utext="${teacher.name}"></td>
+                            <td th:utext="${teacher.surname}"></td>
+                            <td>
+                                <form th:action="@{viewHomeworks}" method="post">
+                                    <input type="hidden" name="id" th:value="${teacher.id}">
+                                    <input type="submit" value="View">
+                                </form>
+                                <form th:action="@{students}" method="post">
+                                    <input type="submit" value="Students">
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="col-lg-12 text-center">
+                <div class="section-title">
+                    <h2>Add new homework</h2>
+                </div>
+            </div>
+            <div class="container-fluid d-flex justify-content-center align-items-center">
+                <div class="row ">
+                    <form th:action="@{addNewHomework}" method="post">
+                        <div class="form-group form-control-lg d-flex justify-content-between align-items-center">
+                            <input type="hidden" name="id" th:value="${teacher.id}">
+                            <label for="taskInput" class="sr-only mx-3">Task: </label>
+                            <input name="task" type="text" id="taskInput">
+                        </div>
+                        <div class="form-group form-control-lg container">
+                            <button type="submit" class="btn btn-primary">Assigned</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+<!--<div class="row">
+    <div class="col-lg-12 text-center">
+        <div class="section-title">
+            <h2>Add new client</h2>
+        </div>
+    </div>
+</div>
+<div class="container-fluid d-flex justify-content-center align-items-center">
+    <div class="row newClientForm">
+        <form id="clientForm" th:action="@{newClientForm}" method="post">
+            <div class="form-group form-control-lg d-flex justify-content-between align-items-center">
+                <label for="inputSurname" class="sr-only mx-3">Surname: </label>
+                <input name="surname" type="text" id="inputSurname">
+            </div>
+            <div class="form-group form-control-lg d-flex justify-content-between align-items-center">
+                <label for="inputName" class="sr-only mx-3">Name: </label>
+                <input name="name" type="text" id="inputName">
+            </div>
+            <div class="form-group form-control-lg d-flex justify-content-between align-items-center">
+                <label for="inputPatronymic" class="sr-only mx-3">Patronymic: </label>
+                <input name="patronymic" type="text" id="inputPatronymic">
+            </div>
+            <div class="form-group form-control-lg d-flex justify-content-between align-items-center">
+                <label for="inputBirthDate" class="sr-only mx-3">Birth date: </label>
+                <input name="birthDate" type="date" id="inputBirthDate">
+            </div>
+            <div class="form-group form-control-lg d-flex justify-content-between align-items-center">
+                <label for="inputEmail" class="sr-only mx-3">Email: </label>
+                <input name="email" type="text" id="inputEmail">
+            </div>
+            <div class="form-group form-control-lg d-flex justify-content-between align-items-center">
+                <label for="inputGender" class="sr-only mx-3">Gender: </label>
+                <select name="gender" id="inputGender" class="form-control">
+                    <option selected class="select">NONE</option>
+                    <option>MALE</option>
+                    <option>FEMALE</option>
+                </select>
+            </div>
+            <div class="form-group form-control-lg container">
+                <button id="addClientSubmit" type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+</div>-->

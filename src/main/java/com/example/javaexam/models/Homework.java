@@ -36,9 +36,9 @@ public class Homework {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_teacher_id"))
     @ToString.Exclude
     private Teacher teacher;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @ToString.Exclude
-   /* @JoinColumn(foreignKey = @ForeignKey(name = "fk_student_id"))*/
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_student_id"))
     private Student student;
 
     @Override

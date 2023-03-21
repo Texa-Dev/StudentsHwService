@@ -13,7 +13,7 @@ public class ModelSource {
 
     @Bean
     public Student studentInst(){
-        return new Student(2,"Doe","John", LocalDate.of(2006,3,5),"PV228",null);
+        return new Student(1,"Doe","John", LocalDate.of(2006,3,5),"PV228",null);
     }
     @Bean
     public Teacher teacherInst(){
