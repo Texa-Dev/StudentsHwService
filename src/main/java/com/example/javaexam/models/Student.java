@@ -27,7 +27,8 @@ public class Student {
     private LocalDate birthDate;
     @Column(nullable = false)
     private String st_group;
-    @OneToMany(mappedBy = "student")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<Homework> homeworks;
 
     @Override
