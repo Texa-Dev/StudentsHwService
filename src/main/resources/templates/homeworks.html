@@ -41,9 +41,9 @@
                 <td th:utext="${homework.deadlineDate}"></td>
                 <td>
                     <div class="form-group d-flex justify-content-between">
-                        <form th:action="@{homeworkDone}" method="post">
+                        <form th:action="@{homeworkDoing}" method="post">
                             <input type="hidden" name="id" th:value="${homework.id}">
-                            <input class="inputSub" type="submit" value="View">
+                            <input class="inputSub" type="submit" value="Do">
                         </form>
                         <form th:action="@{homeworkDone}" method="post">
                             <input type="hidden" name="id" th:value="${homework.id}">
