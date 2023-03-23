@@ -27,6 +27,8 @@ public class Student {
     private LocalDate birthDate;
     @Column(nullable = false)
     private String st_group;
+    @Column(nullable = false, columnDefinition = "double default 0.0")
+    private double avgGrade;
     @OneToMany(mappedBy = "student", fetch = FetchType.EAGER)
     @ToString.Exclude
     private List<Homework> homeworks;

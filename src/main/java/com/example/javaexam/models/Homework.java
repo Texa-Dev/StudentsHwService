@@ -29,6 +29,8 @@ public class Homework {
     private LocalDate assignmentDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate deadlineDate;
+    @Column(nullable = false, columnDefinition = "int default 0")
+    private int grade;
     @Column(nullable = false,
             columnDefinition = "int(1) default 0")
     private Status status;

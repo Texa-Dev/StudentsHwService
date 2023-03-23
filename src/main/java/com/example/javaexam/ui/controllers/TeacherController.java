@@ -3,24 +3,34 @@ package com.example.javaexam.ui.controllers;
 import com.example.javaexam.models.Homework;
 import com.example.javaexam.models.Student;
 import com.example.javaexam.models.Teacher;
+import com.example.javaexam.models.User;
+import com.example.javaexam.repositories.UserRepository;
 import com.example.javaexam.service.data.HomeworkService;
 import com.example.javaexam.service.data.StudentService;
 import com.example.javaexam.service.data.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class TeacherController {
+
     @Autowired
     TeacherService teacherService;
+    @Autowired
+    UserRepository userRepository;
     @Autowired
     HomeworkService homeworkService;
     @Autowired
@@ -28,10 +38,16 @@ public class TeacherController {
 
     @GetMapping("teacher")
     String load(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        Teacher teacher = teacherService.findById(1);
-        model.addAttribute("teacher", teacher);
-        return "teacher";
+       if (!Objects.equals(authentication.getName(), "admin")) {
+           User byUsername = userRepository.findByUsername(authentication.getName());
+           Teacher teacher = teacherService.findTeacherByUser(byUsername);
+
+           model.addAttribute("teacher", teacher);
+           return "teacher";
+       }
+       return "redirect:students";
     }
 
     @PostMapping("students")
@@ -46,7 +62,7 @@ public class TeacherController {
 
         all.forEach(student ->{
             student.setHomeworks(List.of(homeworkService.save(new Homework(0, task, "", LocalDate.now(),
-                    LocalDate.now().plusDays(10), Homework.Status.ASSIGNED, teacher, student))));
+                    LocalDate.now().plusDays(10), 0,Homework.Status.ASSIGNED, teacher, student))));
             /*if (student.getHomeworks()==null) {
                 student.setHomeworks(List.of(homeworkService.save(new Homework(0, task, "", LocalDate.now(),
                         LocalDate.now().plusDays(10), Homework.Status.ASSIGNED, teacher, student))));
@@ -54,5 +70,36 @@ public class TeacherController {
                     LocalDate.now().plusDays(10), Homework.Status.ASSIGNED, teacher, student)));*/
         });
         return "redirect:/teacher";
+    }
+
+    @PostMapping("viewHomeworks")
+    ModelAndView viewHomeworks(@RequestParam("id")Integer id) {
+
+        return new ModelAndView("redirect:teacherHomeworks",
+                new ModelMap("id",id));
+    }
+
+    @GetMapping("teacherHomeworks")
+    String viewHomeworks(Model model, @RequestParam("id")Integer id) {
+        Teacher teacher = teacherService.findById(id);
+        List<Homework> allUnchecked = homeworkService.findAllByTeacherAndStatus(teacher,Homework.Status.UNCHECKED);
+        model.addAttribute("uncheckedHomeworks", allUnchecked);
+        return "teacherHomeworks";
+    }
+
+    @PostMapping("checkHomework")
+    ModelAndView checkHomework(@RequestParam("id")Integer id) {
+        System.out.println(id);
+        return new ModelAndView("redirect:checkHomework",
+                new ModelMap("id",id));
+    }
+
+    @GetMapping("checkHomework")
+    String checkHomework(Model model, @RequestParam("id")Integer id) {
+        System.err.println(id);
+        Homework homework = homeworkService.findById(id);
+        System.out.println(homework);
+        model.addAttribute("homework", homework);
+        return "checkHomework";
     }
 }

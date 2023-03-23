@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Students</title>
+    <th:block th:insert="~{/fragments/settings-head::settings-head}">
+    </th:block>
+
+</head>
+<body>
+<th:block th:insert="~{/fragments/header::header}"></th:block>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <div class="section-title">
+                <h2>Unchecked homeworks</h2>
+            </div>
+        </div>
+    </div>
+    <div id="clientsTableId" class="clientsTable">
+        <table class="table table-bordered table-dark">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Task</th>
+                <th scope="col">Status</th>
+                <th scope="col">Assigment date</th>
+                <th scope="col">Deadline date</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <!--/*@thymesVar id="uncheckedHomeworks" type="List<Homework>"*/-->
+            <tr th:each="homework:${uncheckedHomeworks}">
+                <td th:utext="${homework.id}"></td>
+                <td th:utext="${homework.task}"></td>
+                <td th:utext="${homework.status}"></td>
+                <td th:utext="${homework.assignmentDate}"></td>
+                <td th:utext="${homework.deadlineDate}"></td>
+                <td>
+                    <div class="form-group d-flex justify-content-between">
+                        <form th:action="@{checkHomework}" method="post">
+                            <input type="hidden" name="id" th:value="${homework.id}">
+                            <input class="inputSub" type="submit" value="Check">
+                        </form>
+                    <!--    <form th:action="@{homeworkDone}" method="post">
+                            <input type="hidden" name="id" th:value="${homework.id}">
+                            <input class="inputSub" type="submit" value="Update">
+                        </form>-->
+                    </div>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
+

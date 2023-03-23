@@ -21,6 +21,8 @@ public class Teacher {
     private String surname;
     @Column(nullable = false, length = 50)
     private String name;
+    @OneToOne
+    private User user;
     @OneToMany(mappedBy = "teacher")
     private List<Homework> homeworks;
 
