@@ -2,7 +2,9 @@ package com.example.javaexam.models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,6 +23,8 @@ public class Teacher {
     private String surname;
     @Column(nullable = false, length = 50)
     private String name;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate birthDate;
     @OneToOne
     private User user;
     @OneToMany(mappedBy = "teacher")

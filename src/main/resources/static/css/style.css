@@ -7,8 +7,19 @@ body {
 }
 
 h1, h2, h3, h4 {
-    color: #fafafa;
+    color: #005bbb;
+    -webkit-text-stroke: 1px #103ad0;
+
 }
 label {
-    color: #ffffff;
+font-size: 22px;
+    color: #ffd500;
+    -webkit-text-stroke: 1px #ebeb31;
 }
+input,select{
+    border: none;
+    border-radius: 2px ;
+    background-color: #c1eaff;
+}
+
+

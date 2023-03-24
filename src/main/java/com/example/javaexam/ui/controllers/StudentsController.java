@@ -27,13 +27,13 @@ public class StudentsController {
         return "students";
     }
 
-      @PostMapping("studentHomeworks")
-      ModelAndView homeworks(@RequestParam("id")Integer id){
+    @PostMapping("studentHomeworks")
+    ModelAndView homeworks(@RequestParam("id") Integer id) {
         return new ModelAndView("redirect:homeworks",
-                new ModelMap("id",id));
+                new ModelMap("id", id));
     }
 
-       @GetMapping("homeworks")
+    @GetMapping("homeworks")
     public String load(Model model, @RequestParam("id") Integer id) {
         Student student = studentService.findById(id);
         if (student.getHomeworks() != null) {

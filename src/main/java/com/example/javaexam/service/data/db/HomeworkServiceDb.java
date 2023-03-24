@@ -36,4 +36,11 @@ public class HomeworkServiceDb implements HomeworkService {
     public List<Homework> findAllByStudentAndStatus(Student student, Homework.Status status) {
         return homeworkRepository.findAllByStudentAndStatus(student,status);
     }
+
+    @Override
+    public double getAverageGradeForStudent(Student student) {
+        List<Homework> allCompletedHw = findAllByStudentAndStatus(student, Homework.Status.COMPLETE);
+        double avg = allCompletedHw.stream().mapToDouble(Homework::getGrade).average().orElse(0.0);
+        return avg;
+    }
 }

@@ -106,28 +106,12 @@ public class TeacherController {
         Homework homework = homeworkService.findById(id);
         homework.setGrade(grade);
         homework.setStatus(Homework.Status.COMPLETE);
-        homework = homeworkService.save(homework);
+        homeworkService.save(homework);
+
         Student student = studentService.findById(homework.getStudent().getId());
-        List<Homework> allCompletedHw = homeworkService.findAllByStudentAndStatus(student, Homework.Status.COMPLETE);
-        double avg = allCompletedHw.stream().mapToDouble(Homework::getGrade).sum() / allCompletedHw.size();
-        student.setAvgGrade(avg);
+        student.setAvgGrade(homeworkService.getAverageGradeForStudent(student));
         studentService.save(student);
         return "redirect:students";
     }
 }
-//поместить в homeworkService
-/*public double getAverageGradeForStudent(Student student) {
-    List<Homework> allCompletedHw = findAllByStudentAndStatus(student, Homework.Status.COMPLETE);
-    double avg = allCompletedHw.stream().mapToDouble(Homework::getGrade).average().orElse(0.0);
-    return avg;
-}*/
 
-//поместить в контроллере
-/*Homework homework = homeworkService.findById(id);
-homework.setGrade(grade);
-homework.setStatus(Homework.Status.COMPLETE);
-homeworkService.save(homework);
-
-Student student = studentService.findById(homework.getStudent().getId());
-student.setAvgGrade(homeworkService.getAverageGradeForStudent(student));
-studentService.save(student);*/

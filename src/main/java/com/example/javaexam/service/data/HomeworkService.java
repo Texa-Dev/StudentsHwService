@@ -11,7 +11,9 @@ public interface HomeworkService {
 
     Homework findById(int id);
 
-    List<Homework> findAllByTeacherAndStatus(Teacher teacher,Homework.Status status);
+    List<Homework> findAllByTeacherAndStatus(Teacher teacher, Homework.Status status);
 
     List<Homework> findAllByStudentAndStatus(Student student, Homework.Status status);
+
+    double getAverageGradeForStudent(Student student);
 }

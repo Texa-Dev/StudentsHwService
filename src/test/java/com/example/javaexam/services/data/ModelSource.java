@@ -19,7 +19,7 @@ public class ModelSource {
     }
     @Bean
     public Teacher teacherInst(){
-        return new Teacher(1,"NewTea","TEA",null,null);
+        return new Teacher(1,"tea","tea",null,null);
     }
     @Bean
     public Homework homeworkInst(){
@@ -28,7 +28,7 @@ public class ModelSource {
     @Bean
     public User userInstance(BCryptPasswordEncoder encoder) {
         String pass = encoder.encode("test");
-        User user = new User(3, "NewTeacher", pass, "tea@mail.com");
+        User user = new User(1, "testT", pass, "tea@mail.com");
         user.setStatus(User.Status.ACTIVE);
         user.setRole(User.Role.TEACHER);
         return user;

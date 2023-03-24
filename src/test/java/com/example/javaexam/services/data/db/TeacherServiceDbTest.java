@@ -41,7 +41,7 @@ public class TeacherServiceDbTest {
         List<Student> list = studentService.findAll();
         for (Student student : list) {
             Homework hw = homeworkService.save(new Homework(0, "What the fuck?", "", LocalDate.now(),
-                    LocalDate.now().plusDays(10), Homework.Status.CREATED, teacherAct, student));
+                    LocalDate.now().plusDays(10),0, Homework.Status.ASSIGNED, teacherAct, student));
             student.setHomeworks(List.of(hw));
         }
         studentService.saveAll(list);
