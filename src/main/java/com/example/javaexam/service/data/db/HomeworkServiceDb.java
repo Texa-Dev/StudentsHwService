@@ -1,6 +1,7 @@
 package com.example.javaexam.service.data.db;
 
 import com.example.javaexam.models.Homework;
+import com.example.javaexam.models.Student;
 import com.example.javaexam.models.Teacher;
 import com.example.javaexam.repositories.HomeworkRepository;
 import com.example.javaexam.service.data.HomeworkService;
@@ -29,5 +30,10 @@ public class HomeworkServiceDb implements HomeworkService {
     public List<Homework> findAllByTeacherAndStatus(Teacher teacher,Homework.Status status) {
         List<Homework> allByTeacherAndStatus = homeworkRepository.findAllByTeacherAndStatus(teacher,status);
         return allByTeacherAndStatus.size() > 0 ? allByTeacherAndStatus : null;
+    }
+
+    @Override
+    public List<Homework> findAllByStudentAndStatus(Student student, Homework.Status status) {
+        return homeworkRepository.findAllByStudentAndStatus(student,status);
     }
 }

@@ -16,7 +16,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "homeworks")
 public class Homework {
-    public enum Status {CREATED, ASSIGNED, IN_PROGRESS, COMPLETE, UNCHECKED, CHECKED}
+    public enum Status {CREATED, ASSIGNED, IN_PROGRESS, UNCHECKED, COMPLETE}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

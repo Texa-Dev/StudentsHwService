@@ -40,14 +40,14 @@ public class TeacherController {
     String load(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-       if (!Objects.equals(authentication.getName(), "admin")) {
-           User byUsername = userRepository.findByUsername(authentication.getName());
-           Teacher teacher = teacherService.findTeacherByUser(byUsername);
+        if (!Objects.equals(authentication.getName(), "admin")) {
+            User byUsername = userRepository.findByUsername(authentication.getName());
+            Teacher teacher = teacherService.findTeacherByUser(byUsername);
 
-           model.addAttribute("teacher", teacher);
-           return "teacher";
-       }
-       return "redirect:students";
+            model.addAttribute("teacher", teacher);
+            return "teacher";
+        }
+        return "redirect:students";
     }
 
     @PostMapping("students")
@@ -60,9 +60,9 @@ public class TeacherController {
         Teacher teacher = teacherService.findById(id);
         List<Student> all = studentService.findAll();
 
-        all.forEach(student ->{
+        all.forEach(student -> {
             student.setHomeworks(List.of(homeworkService.save(new Homework(0, task, "", LocalDate.now(),
-                    LocalDate.now().plusDays(10), 0,Homework.Status.ASSIGNED, teacher, student))));
+                    LocalDate.now().plusDays(10), 0, Homework.Status.ASSIGNED, teacher, student))));
             /*if (student.getHomeworks()==null) {
                 student.setHomeworks(List.of(homeworkService.save(new Homework(0, task, "", LocalDate.now(),
                         LocalDate.now().plusDays(10), Homework.Status.ASSIGNED, teacher, student))));
@@ -73,33 +73,61 @@ public class TeacherController {
     }
 
     @PostMapping("viewHomeworks")
-    ModelAndView viewHomeworks(@RequestParam("id")Integer id) {
+    ModelAndView viewHomeworks(@RequestParam("id") Integer id) {
 
         return new ModelAndView("redirect:teacherHomeworks",
-                new ModelMap("id",id));
+                new ModelMap("id", id));
     }
 
     @GetMapping("teacherHomeworks")
-    String viewHomeworks(Model model, @RequestParam("id")Integer id) {
+    String viewHomeworks(Model model, @RequestParam("id") Integer id) {
         Teacher teacher = teacherService.findById(id);
-        List<Homework> allUnchecked = homeworkService.findAllByTeacherAndStatus(teacher,Homework.Status.UNCHECKED);
+        List<Homework> allUnchecked = homeworkService.findAllByTeacherAndStatus(teacher, Homework.Status.UNCHECKED);
         model.addAttribute("uncheckedHomeworks", allUnchecked);
         return "teacherHomeworks";
     }
 
     @PostMapping("checkHomework")
-    ModelAndView checkHomework(@RequestParam("id")Integer id) {
+    ModelAndView checkHomework(@RequestParam("id") Integer id) {
         System.out.println(id);
         return new ModelAndView("redirect:checkHomework",
-                new ModelMap("id",id));
+                new ModelMap("id", id));
     }
 
     @GetMapping("checkHomework")
-    String checkHomework(Model model, @RequestParam("id")Integer id) {
-        System.err.println(id);
+    String checkHomework(Model model, @RequestParam("id") Integer id) {
         Homework homework = homeworkService.findById(id);
-        System.out.println(homework);
         model.addAttribute("homework", homework);
         return "checkHomework";
     }
+
+    @PostMapping("completeHomework")
+    String completeHomework(@RequestParam("id") Integer id, @RequestParam("grade") Integer grade) {
+        Homework homework = homeworkService.findById(id);
+        homework.setGrade(grade);
+        homework.setStatus(Homework.Status.COMPLETE);
+        homework = homeworkService.save(homework);
+        Student student = studentService.findById(homework.getStudent().getId());
+        List<Homework> allCompletedHw = homeworkService.findAllByStudentAndStatus(student, Homework.Status.COMPLETE);
+        double avg = allCompletedHw.stream().mapToDouble(Homework::getGrade).sum() / allCompletedHw.size();
+        student.setAvgGrade(avg);
+        studentService.save(student);
+        return "redirect:students";
+    }
 }
+//поместить в homeworkService
+/*public double getAverageGradeForStudent(Student student) {
+    List<Homework> allCompletedHw = findAllByStudentAndStatus(student, Homework.Status.COMPLETE);
+    double avg = allCompletedHw.stream().mapToDouble(Homework::getGrade).average().orElse(0.0);
+    return avg;
+}*/
+
+//поместить в контроллере
+/*Homework homework = homeworkService.findById(id);
+homework.setGrade(grade);
+homework.setStatus(Homework.Status.COMPLETE);
+homeworkService.save(homework);
+
+Student student = studentService.findById(homework.getStudent().getId());
+student.setAvgGrade(homeworkService.getAverageGradeForStudent(student));
+studentService.save(student);*/
