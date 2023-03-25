@@ -35,26 +35,23 @@ public class SecurityConfig {
 
     }
 
-     @Bean
-     public SecurityFilterChain filterChain(HttpSecurity security) throws Exception {
-         security
-                 .authorizeRequests(authorize -> {
-                             authorize.requestMatchers("/students").hasAnyAuthority("ADMIN", "TEACHER", "STUDENT")
-                                     .requestMatchers("/teacher").hasAnyAuthority("ADMIN", "TEACHER")
-                                     .requestMatchers("/registration", "/authorization").permitAll()
-                                     .anyRequest().authenticated();
-                         }
-                 )
-                 .formLogin(formLogin -> formLogin
-                         .loginPage("/authorization")
-                         .defaultSuccessUrl("/students")
-                         .permitAll()
-                 )
-                 .logout(logout -> logout
-                         .logoutSuccessUrl("/authorization")
-                         .invalidateHttpSession(true)
-                         .deleteCookies("JSESSIONID")
-                 );
-         return security.build();
-     }
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity security) throws Exception {
+        security
+                .authorizeRequests().requestMatchers("/students").hasAnyAuthority("ADMIN", "TEACHER", "STUDENT")
+                .requestMatchers("/teacher").hasAnyAuthority("ADMIN", "TEACHER")
+                .requestMatchers("/registration", "/authorization", "/resources/**", "/static/**", "/css/**", "/js/**", "/img/**","/webjars/**").permitAll()
+                .anyRequest().authenticated().and()
+                .formLogin(formLogin -> formLogin
+                        .loginPage("/authorization")
+                        .defaultSuccessUrl("/students")
+                        .permitAll()
+                )
+                .logout(logout -> logout
+                        .logoutSuccessUrl("/authorization")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                );
+        return security.build();
+    }
 }
