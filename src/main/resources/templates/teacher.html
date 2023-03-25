@@ -12,15 +12,15 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-9">
             <div class="col-lg-12 text-center">
                 <div class="section-title">
                     <h2>Teacher</h2>
                 </div>
             </div>
             <div class="row">
-                <div class="clientsTable">
-                    <table class="table table-bordered table-dark">
+                <div>
+                    <table class="table table-bordered table-dark teacherTable">
                         <thead>
                         <tr>
                             <th scope="col">Id</th>
@@ -37,6 +37,7 @@
                             <td th:utext="${teacher.name}"></td>
                             <td th:utext="${teacher.surname}"></td>
                             <td>
+                                <div class="d-flex justify-content-md-evenly align-items-center">
                                 <form th:action="@{viewHomeworks}" method="post">
                                     <input type="hidden" name="id" th:value="${teacher.id}">
                                     <input type="submit" value="View homeworks">
@@ -44,6 +45,7 @@
                                 <form th:action="@{students}" method="post">
                                     <input type="submit" value="Students">
                                 </form>
+                                </div>
                             </td>
                         </tr>
                         </tbody>
@@ -51,7 +53,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-3">
             <div class="col-lg-12 text-center">
                 <div class="section-title">
                     <h2>Add new homework</h2>

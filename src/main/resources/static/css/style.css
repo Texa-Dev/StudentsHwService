@@ -12,14 +12,19 @@ h1, h2, h3, h4 {
 
 }
 label {
-font-size: 22px;
+font-size: 24px;
     color: #ffd500;
-    -webkit-text-stroke: 1px #ebeb31;
+    -webkit-text-stroke: 1px #b60000;
+    -moz-opacity: 20;
 }
 input,select{
     border: none;
-    border-radius: 2px ;
-    background-color: #c1eaff;
+    border-radius: 3px ;
+    background-color: #0029b7;
+    color: #ffd500;
+}
+.studentsTable, .teacherTable{
+    color: #ffd500;
 }
 
 

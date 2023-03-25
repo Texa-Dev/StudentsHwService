@@ -22,11 +22,11 @@ public class UserServiceDbTest {
     @Autowired
     List<User> userList;
 
-   /* @Test
+    @Test
     @Order(1)
     void save() {
         System.out.println(userExp);
         userAct = userService.save(userExp);
         assertEquals(userExp, userAct);
-    }*/
+    }
 }

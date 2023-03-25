@@ -24,21 +24,22 @@ public class RegistrationController {
     @Autowired
     StudentService studentService;
 
-    @PostMapping("registerUser")
+    @PostMapping("/registerUser")
     String registerUser(@ModelAttribute User user,
                         @RequestParam("name") String name,
                         @RequestParam("surname") String surname,
                         @RequestParam("birthDate") LocalDate birthDate) {
+        System.out.println(user);
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         user.setPassword(encoder.encode(user.getPassword()));
         user.setStatus(User.Status.ACTIVE);
         user = userService.save(user);
         if (user.getRole().name().equals("TEACHER")) {
             Teacher t = new Teacher(0, surname, name, birthDate, user, null);
-            t = teacherService.save(t);
+            teacherService.save(t);
             return "redirect:/authorization";
         } else if (user.getRole().name().equals("STUDENT")) {
-            Student s = new Student(0, surname, name, birthDate, "PV228", 0.0, user,null);
+            Student s = new Student(0, surname, name, birthDate, "PV228", 0.0, user, null);
             studentService.save(s);
             return "redirect:/authorization";
         }

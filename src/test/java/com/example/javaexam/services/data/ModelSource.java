@@ -27,10 +27,10 @@ public class ModelSource {
     }
     @Bean
     public User userInstance(BCryptPasswordEncoder encoder) {
-        String pass = encoder.encode("test");
-        User user = new User(1, "testT", pass, "tea@mail.com");
+        String pass = encoder.encode("admin");
+        User user = new User(4, "admin", pass, "admin@mail.com");
         user.setStatus(User.Status.ACTIVE);
-        user.setRole(User.Role.TEACHER);
+        user.setRole(User.Role.ADMIN);
         return user;
     }
 

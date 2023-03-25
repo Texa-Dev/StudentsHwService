@@ -18,8 +18,8 @@
             </div>
         </div>
     </div>
-    <div id="clientsTableId" class="clientsTable">
-        <table class="table table-bordered table-dark">
+    <div id="studentsTableId" >
+        <table class="table table-bordered table-dark studentsTable">
             <thead>
             <tr>
                 <th scope="col">Id</th>
@@ -40,7 +40,7 @@
                 <td th:utext="${student.birthDate}"></td>
                 <td th:utext="${student.st_group}"></td>
                 <td>
-                    <div class="form-group d-flex justify-content-between">
+                    <div class="form-group d-flex justify-content-md-evenly">
                         <form th:action="@{studentHomeworks}" method="post">
                             <input type="hidden" name="id" th:value="${student.id}">
                             <input class="inputSub" type="submit" value="Homeworks">
