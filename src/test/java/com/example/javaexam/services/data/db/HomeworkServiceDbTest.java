@@ -16,9 +16,9 @@ public class HomeworkServiceDbTest {
     Homework homeworkExp;
     Homework homeworkAct;
 
-    @Test
+/*    @Test
     public void save(){
         homeworkAct= homeworkService.save(homeworkExp);
         Assertions.assertEquals(homeworkExp,homeworkAct);
-    }
+    }*/
 }

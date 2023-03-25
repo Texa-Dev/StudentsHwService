@@ -31,8 +31,8 @@
                         </thead>
                         <tbody>
 
-                        <!--/*@thymesVar id="teacher" type="Teacher"*/-->
-                        <tr>
+                        <!--/*@thymesVar id="teachers" type="List<Teacher>"*/-->
+                        <tr th:each="teacher:${teachers}">
                             <td th:utext="${teacher.id}"></td>
                             <td th:utext="${teacher.name}"></td>
                             <td th:utext="${teacher.surname}"></td>
@@ -61,7 +61,7 @@
                 <div class="row ">
                     <form th:action="@{addNewHomework}" method="post">
                         <div class="form-group form-control-lg d-flex justify-content-between align-items-center">
-                            <input type="hidden" name="id" th:value="${teacher.id}">
+                            <input type="hidden" name="id" th:value="${teachers[0].id}">
                             <label for="taskInput" class="sr-only mx-3">Task: </label>
                             <input name="task" type="text" id="taskInput">
                         </div>

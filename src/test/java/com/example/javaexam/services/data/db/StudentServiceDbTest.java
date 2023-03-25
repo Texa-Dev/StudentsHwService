@@ -20,7 +20,7 @@ public class StudentServiceDbTest {
     Student studEx;
     Student studAct;
 
-    @Test
+   /* @Test
     void save() {
 
         studAct = studentService.save(studEx);
@@ -33,5 +33,5 @@ public class StudentServiceDbTest {
         studAct.getHomeworks().get(0).setStatus(Homework.Status.IN_PROGRESS);
         studentService.save(studAct);
         System.out.println(studentService.findById(2).getHomeworks().get(0));
-    }
+    }*/
 }

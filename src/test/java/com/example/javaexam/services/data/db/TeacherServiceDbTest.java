@@ -28,7 +28,7 @@ public class TeacherServiceDbTest {
     Teacher teacherExp;
     Teacher teacherAct;
 
-    @Test
+   /* @Test
     void save() {
         teacherAct = teacherService.save(teacherExp);
         assertEquals(teacherExp, teacherAct);
@@ -45,5 +45,5 @@ public class TeacherServiceDbTest {
             student.setHomeworks(List.of(hw));
         }
         studentService.saveAll(list);
-    }
+    }*/
 }

@@ -37,17 +37,19 @@ public class TeacherController {
     StudentService studentService;
 
     @GetMapping("teacher")
-    String load(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    String load(Model model, Authentication authentication) {
+        User user = userRepository.findByUsername(authentication.getName());
+        List<Teacher> teachers = new ArrayList<>();
 
-        if (!Objects.equals(authentication.getName(), "admin")) {
-            User byUsername = userRepository.findByUsername(authentication.getName());
-            Teacher teacher = teacherService.findTeacherByUser(byUsername);
-
-            model.addAttribute("teacher", teacher);
-            return "teacher";
+        if (user.getRole() == User.Role.TEACHER) {
+            teachers.add(teacherService.findTeacherByUser(user));
+        } else if (user.getRole() == User.Role.ADMIN) {
+            teachers = teacherService.findAll();
+        } else {
+            return "redirect:students";
         }
-        return "redirect:students";
+        model.addAttribute("teachers", teachers);
+        return "teacher";
     }
 
     @PostMapping("students")
@@ -60,15 +62,8 @@ public class TeacherController {
         Teacher teacher = teacherService.findById(id);
         List<Student> all = studentService.findAll();
 
-        all.forEach(student -> {
-            student.setHomeworks(List.of(homeworkService.save(new Homework(0, task, "", LocalDate.now(),
-                    LocalDate.now().plusDays(10), 0, Homework.Status.ASSIGNED, teacher, student))));
-            /*if (student.getHomeworks()==null) {
-                student.setHomeworks(List.of(homeworkService.save(new Homework(0, task, "", LocalDate.now(),
-                        LocalDate.now().plusDays(10), Homework.Status.ASSIGNED, teacher, student))));
-            }else student.getHomeworks().add(homeworkService.save(new Homework(0, task, "", LocalDate.now(),
-                    LocalDate.now().plusDays(10), Homework.Status.ASSIGNED, teacher, student)));*/
-        });
+        all.forEach(student -> student.setHomeworks(List.of(homeworkService.save(new Homework(0, task, "", LocalDate.now(),
+                LocalDate.now().plusDays(10), 0, Homework.Status.ASSIGNED, teacher, student)))));
         return "redirect:/teacher";
     }
 

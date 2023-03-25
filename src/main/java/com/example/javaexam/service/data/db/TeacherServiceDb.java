@@ -7,6 +7,8 @@ import com.example.javaexam.service.data.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TeacherServiceDb implements TeacherService {
     @Autowired
@@ -24,5 +26,10 @@ public class TeacherServiceDb implements TeacherService {
     @Override
     public Teacher findTeacherByUser(User byUsername) {
         return teacherRepository.findTeacherByUser(byUsername);
+    }
+
+    @Override
+    public List<Teacher> findAll() {
+        return teacherRepository.findAll();
     }
 }

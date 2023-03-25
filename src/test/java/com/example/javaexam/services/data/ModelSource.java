@@ -15,11 +15,11 @@ public class ModelSource {
 
     @Bean
     public Student studentInst(){
-        return new Student(1,"Doe","John", LocalDate.of(2006,3,5),"PV228",0.0,null);
+        return new Student(1,"Doe","John", LocalDate.of(2006,3,5),"PV228",0.0,null,null);
     }
     @Bean
     public Teacher teacherInst(){
-        return new Teacher(1,"tea","tea",null,null);
+        return new Teacher(1,"tea","tea",null,null,null);
     }
     @Bean
     public Homework homeworkInst(){

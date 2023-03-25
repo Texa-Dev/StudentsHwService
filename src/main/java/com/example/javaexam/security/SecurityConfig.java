@@ -2,9 +2,11 @@ package com.example.javaexam.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -34,23 +36,25 @@ public class SecurityConfig {
     }
 
      @Bean
-    public SecurityFilterChain filterChain(HttpSecurity security) throws Exception {
-        security
-                .authorizeRequests()
-                .anyRequest()
-                .permitAll()
-                /*.antMatchers("/clients")
-                .authenticated()
-                .antMatchers("/users",
-                                    "/countries",
-                                    "/clientsUpdate")
-                .hasAuthority(ADMIN.name())
-                .mvcMatchers("/rest/addNewClient").authenticated()*/
-                .and()
-                .formLogin().
-                loginPage("/authorization")
-                .and().logout().
-                logoutSuccessUrl("/authorization");
-        return security.build();
-    }
+     public SecurityFilterChain filterChain(HttpSecurity security) throws Exception {
+         security
+                 .authorizeRequests(authorize -> {
+                             authorize.requestMatchers("/students").hasAnyAuthority("ADMIN", "TEACHER")
+                                     .requestMatchers("/teacher").hasAnyAuthority("ADMIN", "TEACHER")
+                                     .requestMatchers("/registration", "/authorization").permitAll()
+                                     .anyRequest().authenticated();
+                         }
+                 )
+                 .formLogin(formLogin -> formLogin
+                         .loginPage("/authorization")
+                         .defaultSuccessUrl("/students")
+                         .permitAll()
+                 )
+                 .logout(logout -> logout
+                         .logoutSuccessUrl("/authorization")
+                         .invalidateHttpSession(true)
+                         .deleteCookies("JSESSIONID")
+                 );
+         return security.build();
+     }
 }
