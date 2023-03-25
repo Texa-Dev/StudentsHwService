@@ -39,7 +39,7 @@ public class SecurityConfig {
      public SecurityFilterChain filterChain(HttpSecurity security) throws Exception {
          security
                  .authorizeRequests(authorize -> {
-                             authorize.requestMatchers("/students").hasAnyAuthority("ADMIN", "TEACHER")
+                             authorize.requestMatchers("/students").hasAnyAuthority("ADMIN", "TEACHER", "STUDENT")
                                      .requestMatchers("/teacher").hasAnyAuthority("ADMIN", "TEACHER")
                                      .requestMatchers("/registration", "/authorization").permitAll()
                                      .anyRequest().authenticated();
