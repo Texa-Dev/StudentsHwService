@@ -37,10 +37,10 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity security) throws Exception {
         security
                 .authorizeRequests()
-                .requestMatchers("/users").hasAnyAuthority("ADMIN")
+                .requestMatchers("/users", "/userUpdate").hasAuthority("ADMIN")
                 .requestMatchers("/students").hasAnyAuthority("ADMIN", "TEACHER", "STUDENT")
                 .requestMatchers("/teacher").hasAnyAuthority("ADMIN", "TEACHER")
-                .requestMatchers("/registerUser","/registration", "/authorization", "/resources/**", "/static/**", "/css/**", "/js/**", "/img/**","/webjars/**").permitAll()
+                .requestMatchers("/registerUser","/registration", "/authorization", "/resources/**", "/static/**", "/css/**", "/js/**", "/img/**", "/webjars/**").permitAll()
                 .anyRequest().authenticated().and()
                 .formLogin(formLogin -> formLogin
                         .loginPage("/authorization")

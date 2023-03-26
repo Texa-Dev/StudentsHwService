@@ -5,7 +5,7 @@
   <title>Students</title>
   <th:block th:insert="~{/fragments/settings-head::settings-head}">
   </th:block>
-
+  <script type="text/javascript" src="/js/userUpdate.js"></script>
 </head>
 <body>
 <th:block th:insert="~{/fragments/header::header}"></th:block>
@@ -38,7 +38,7 @@
         <td th:utext="${user.username}"></td>
         <td th:utext="${user.email}"></td>
         <td>
-          <select>
+          <select id="role" name="userRole">
             <th:block th:each="role : ${T(com.example.javaexam.models.User.Role).values()}">
               <option
                       th:value="${role}" th:text="${role}"
@@ -47,7 +47,7 @@
           </select>
         </td>
         <td>
-          <select>
+          <select id="status" name="userStatus">
             <th:block th:each="status : ${T(com.example.javaexam.models.User.Status).values()}">
               <option
                       th:value="${status}" th:text="${status}"
@@ -57,9 +57,9 @@
         </td>
         <td>
           <div class="form-group d-flex justify-content-md-evenly">
-            <form th:action="@{userUpdate}" method="post">
-              <input type="hidden" name="id" th:value="${user.id}">
-              <input class="inputSub" type="submit" value="Update">
+            <form id="userUpdateForm" th:action="@{userUpdate}" method="post">
+              <input id="user-id" type="hidden" name="id" th:value="${user.id}">
+              <input id="updateUserSub" class="inputSub" type="submit" value="Update">
             </form>
             <form th:action="@{userDelete}" method="post">
               <input type="hidden" name="id" th:value="${user.id}">

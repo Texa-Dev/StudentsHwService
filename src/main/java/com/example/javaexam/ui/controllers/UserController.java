@@ -3,9 +3,11 @@ package com.example.javaexam.ui.controllers;
 import com.example.javaexam.models.User;
 import com.example.javaexam.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,4 +23,18 @@ public class UserController {
         model.addAttribute("users", list);
         return "users";
     }
+    @PostMapping("userUpdate")
+    public String userUpdate(@RequestParam Integer id,
+                             @RequestParam String userRole,
+                             @RequestParam String userStatus) {
+        System.out.println(id);
+        User user = userService.findById(id);
+        System.out.println(userRole);
+        System.out.println(userStatus);
+       /* user.setRole(role);
+        user.setStatus(status);*/
+        userService.save(user);
+        return "redirect:users";
+    }
+
 }

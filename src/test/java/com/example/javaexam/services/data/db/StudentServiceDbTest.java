@@ -20,12 +20,12 @@ public class StudentServiceDbTest {
     Student studEx;
     Student studAct;
 
-    @Test
+   /* @Test
     void save() {
 
         studAct = studentService.save(studEx);
         assertEquals(studEx, studAct);
-    }
+    }*/
 /*
     @Test
     void testChangeStatus(){

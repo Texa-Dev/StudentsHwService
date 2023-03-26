@@ -8,4 +8,6 @@ public interface UserService {
     User save(User userExp);
 
     List<User> findAll();
+
+    User findById(Integer id);
 }
