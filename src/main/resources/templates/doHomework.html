@@ -37,6 +37,7 @@
                 <div class="form-group form-control-lg d-flex justify-content-between align-items-center">
                     <input name="id" type="hidden" th:value="*{getId()}">
                     <input type="hidden" name="action" value="">
+                    <!--вариант отправки Action нашел в нете тоже незнаю насолько правильный подход-->
                     <input type="submit" class="btn-primary" value="Save" onclick="document.getElementsByName('action')[0].value='save'">
                     <input type="submit" class="btn-primary" value="Send" onclick="document.getElementsByName('action')[0].value='send'">
                 </div>

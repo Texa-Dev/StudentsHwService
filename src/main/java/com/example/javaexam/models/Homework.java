@@ -15,6 +15,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "homeworks")
 public class Homework {
+    //статус домашней работы (хотел добавить еще просроченную (не успел, работаю))
     public enum Status {CREATED, ASSIGNED, IN_PROGRESS, UNCHECKED, COMPLETE}
 
     @Id

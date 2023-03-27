@@ -38,6 +38,8 @@ public class HomeworkController {
         return "doHomework";
     }
 
+
+    //Метод сохранения или отправки домашнего задания
     @PostMapping("saveHomework")
     ModelAndView saveHomework(@RequestParam("id") Integer id, @RequestParam("text") String text,
                               @RequestParam("action") String action) {
@@ -50,12 +52,10 @@ public class HomeworkController {
             homework.setStatus(Homework.Status.UNCHECKED);
             homework = homeworkService.save(homework);
         }
-        Student byId = studentService.findById(homework.getStudent().getId());
-        int stId = byId.getId();
-        byId.setHomeworks(List.of(homework));
+        homework.getStudent().setHomeworks(List.of(homework));
 
         return new ModelAndView("redirect:homeworks",
-                new ModelMap("id", stId));
+                new ModelMap("id", homework.getStudent().getId()));
 
     }
 

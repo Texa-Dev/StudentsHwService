@@ -38,6 +38,9 @@ public class TeacherController {
 
     @GetMapping("teacher")
     String load(Model model, Authentication authentication) {
+        //незнаю насколько это правильно и можно использовать authentication в контроллере но это для того что-бы
+        //учитель видел только свой аккаунт а Админ видел всех, для студентов тоже не успел сделать
+
         User user = userRepository.findByUsername(authentication.getName());
         List<Teacher> teachers = new ArrayList<>();
 
@@ -56,7 +59,7 @@ public class TeacherController {
     String students() {
         return "redirect:/students";
     }
-
+//выдача заданий всем студентам
     @PostMapping("addNewHomework")
     String addNewHomework(@RequestParam("id") Integer id, @RequestParam("task") String task) {
         Teacher teacher = teacherService.findById(id);
@@ -74,6 +77,7 @@ public class TeacherController {
                 new ModelMap("id", id));
     }
 
+ // список только не проверенный работ учителя
     @GetMapping("teacherHomeworks")
     String viewHomeworks(Model model, @RequestParam("id") Integer id) {
         Teacher teacher = teacherService.findById(id);
@@ -96,6 +100,7 @@ public class TeacherController {
         return "checkHomework";
     }
 
+    //Оценка и завершение задания
     @PostMapping("completeHomework")
     String completeHomework(@RequestParam("id") Integer id, @RequestParam("grade") Integer grade) {
         Homework homework = homeworkService.findById(id);

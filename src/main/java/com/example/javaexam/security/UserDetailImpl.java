@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-
+//Это взято с предидущего поекта
 public class UserDetailImpl implements UserDetails {
     private User user;
 

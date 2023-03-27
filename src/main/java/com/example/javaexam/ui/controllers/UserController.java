@@ -23,6 +23,7 @@ public class UserController {
         model.addAttribute("users", list);
         return "users";
     }
+    //это неработает (так и не разобрался пока(вам в личку писал))
     @PostMapping("userUpdate")
     public String userUpdate(@RequestParam Integer id,
                              @RequestParam String userRole,

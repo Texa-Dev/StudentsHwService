@@ -8,6 +8,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+//Это взято с предидущего поекта
 @Controller
 public class LogoutController {
     @GetMapping("logout")

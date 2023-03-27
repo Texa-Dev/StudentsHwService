@@ -33,7 +33,8 @@ public class SecurityConfig {
 
     }
 
-    @Bean
+    //Незнаю насколько это правильная настройка но Security 6.0 только такой вариант принял
+   @Bean
     public SecurityFilterChain filterChain(HttpSecurity security) throws Exception {
         security
                 .authorizeRequests()

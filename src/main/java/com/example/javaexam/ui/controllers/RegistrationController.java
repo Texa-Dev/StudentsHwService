@@ -24,6 +24,8 @@ public class RegistrationController {
     @Autowired
     StudentService studentService;
 
+
+    //регистрация пользователя, или студент или учитель от выбраной роли
     @PostMapping("/registerUser")
     String registerUser(@ModelAttribute User user,
                         @RequestParam("name") String name,
@@ -32,7 +34,8 @@ public class RegistrationController {
         System.out.println(user);
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         user.setPassword(encoder.encode(user.getPassword()));
-        user.setStatus(User.Status.ACTIVE);
+        user.setStatus(User.Status.ACTIVE); //статус должен быть другой но не смог сделать обновление юзера админа можно
+                                            //создать только в тесте
         user = userService.save(user);
         if (user.getRole().name().equals("TEACHER")) {
             Teacher t = new Teacher(0, surname, name, birthDate, user, null);

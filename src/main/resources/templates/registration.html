@@ -37,6 +37,8 @@
       <div class="form-group form-control-lg d-flex align-items-center">
         <label for="inputRole" class="sr-only mx-3">Role: </label>
         <select name="role" id="inputRole" class="form-control">
+          <!--список ролей за исключением АДМИНА-->
+
           <th:block th:each="role : ${T(com.example.javaexam.models.User.Role).values()}">
             <option
                     th:unless="${role == T(com.example.javaexam.models.User.Role).ADMIN}"

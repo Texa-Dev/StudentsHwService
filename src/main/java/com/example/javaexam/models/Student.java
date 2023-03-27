@@ -26,13 +26,13 @@ public class Student {
     private String name;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
-    @Column(nullable = false)
+    @Column(nullable = false) // Группа должна быть сущьностью но пока так
     private String st_group;
     @Column(nullable = false, columnDefinition = "double default 0.0")
     private double avgGrade;
     @OneToOne
     private User user;
-    @OneToMany(mappedBy = "student", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "student")
     @ToString.Exclude
     private List<Homework> homeworks;
 

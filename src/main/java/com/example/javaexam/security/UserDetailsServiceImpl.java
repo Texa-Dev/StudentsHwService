@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
+//Это взято с предидущего поекта
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
@@ -16,7 +16,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
-        System.err.println(user);
+      //  System.err.println(user);
         if (user==null)
             throw new UsernameNotFoundException(username);
         return new UserDetailImpl(user);
